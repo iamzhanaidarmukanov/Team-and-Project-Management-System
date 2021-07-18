@@ -39,7 +39,10 @@ public class Main {
                if (cmdParts[0].equals("startNewDay")) {
                    (new CmdStartNewDay()).execute(cmdParts);
                }
-               
+               if (cmdParts[0].equals("hire")) {
+                   (new CmdHire()).execute(cmdParts);
+               }
+
 
            }
 
