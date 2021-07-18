@@ -36,9 +36,10 @@ public class Main {
                System.out.println("\n> " + cmdLine);
                String[] cmdParts = cmdLine.split("\\|");
 
-            //    if (cmdParts[0].equals("startNewDay")) {
-            //        (new CmdStartNewDay()).execute(cmdParts);
-            //    }
+               if (cmdParts[0].equals("startNewDay")) {
+                   (new CmdStartNewDay()).execute(cmdParts);
+               }
+               
 
            }
 
