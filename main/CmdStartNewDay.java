@@ -1,6 +1,8 @@
 package main;
 
 import java.util.*;
+import main.exceptions.ExInsufficientCommandArguments;
+
 public class CmdStartNewDay extends RecordedCommand {
 
     ArrayList<String> allDates = new ArrayList<>();
