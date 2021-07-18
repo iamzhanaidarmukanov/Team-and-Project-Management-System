@@ -42,7 +42,7 @@ public class Employee implements Comparable<Employee>{
 
     public void joinToTeam(Team t) {
         this.aTeam = t;
-        t.addMember(this);
+        // t.addMember(this);
     }
     public void joinToTeam(Employee e, Team t) {
         this.aTeam = t;
