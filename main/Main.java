@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import main.commands.CmdHire;
+import main.commands.CmdSetupTeam;
 import main.commands.CmdStartNewDay;
 
 public class Main {
@@ -38,13 +40,11 @@ public class Main {
                System.out.println("\n> " + cmdLine);
                String[] cmdParts = cmdLine.split("\\|");
 
-               if (cmdParts[0].equals("startNewDay")) {
-                   (new CmdStartNewDay()).execute(cmdParts);
-               }
-               if (cmdParts[0].equals("hire")) {
-                   (new CmdHire()).execute(cmdParts);
-               }
-
+               if (cmdParts[0].equals("startNewDay")) {(new CmdStartNewDay()).execute(cmdParts);}
+               else if (cmdParts[0].equals("undo")) {RecordedCommand.undoOneCommand();}
+               else if (cmdParts[0].equals("redo")) {RecordedCommand.redoOneCommand();}
+               else if (cmdParts[0].equals("hire")) {(new CmdHire()).execute(cmdParts);}
+               else if (cmdParts[0].equals("setupTeam")) {(new CmdSetupTeam()).execute(cmdParts);}
 
            }
 
