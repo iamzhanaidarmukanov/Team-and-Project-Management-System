@@ -3,8 +3,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import main.commands.CmdChangeTeam;
 import main.commands.CmdCreateProject;
 import main.commands.CmdHire;
+import main.commands.CmdJoinTeam;
 import main.commands.CmdListEmployees;
 import main.commands.CmdListProject;
 import main.commands.CmdListTeams;
@@ -53,6 +55,9 @@ public class Main {
                else if (cmdParts[0].equals("listEmployees")) {(new CmdListEmployees()).execute(cmdParts);} 
                else if (cmdParts[0].equals("listTeams")) {(new CmdListTeams()).execute(cmdParts);} 
                else if (cmdParts[0].equals("listProjects")) {(new CmdListProject()).execute(cmdParts);}
+               else if(cmdParts[0].equals("joinTeam")) {(new CmdJoinTeam()).execute(cmdParts);}
+               else if(cmdParts[0].equals("changeTeam")) {(new CmdChangeTeam()).execute(cmdParts);}
+               else if(cmdParts[0].equals("takeProject")) {(new CmdTakeProject()).execute(cmdParts);}
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
