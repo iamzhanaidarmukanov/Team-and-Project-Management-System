@@ -1,6 +1,9 @@
-package main;
+package main.commands;
 
 import java.util.*;
+
+import main.RecordedCommand;
+import main.SystemDate;
 import main.exceptions.ExInsufficientCommandArguments;
 
 public class CmdStartNewDay extends RecordedCommand {

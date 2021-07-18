@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import main.commands.CmdStartNewDay;
+
 public class Main {
 
     public static void main(String[] args) {
