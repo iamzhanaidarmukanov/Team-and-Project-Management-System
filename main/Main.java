@@ -5,6 +5,9 @@ import java.util.*;
 
 import main.commands.CmdCreateProject;
 import main.commands.CmdHire;
+import main.commands.CmdListEmployees;
+import main.commands.CmdListProject;
+import main.commands.CmdListTeams;
 import main.commands.CmdSetupTeam;
 import main.commands.CmdStartNewDay;
 
@@ -50,9 +53,7 @@ public class Main {
                else if (cmdParts[0].equals("listEmployees")) {(new CmdListEmployees()).execute(cmdParts);} 
                else if (cmdParts[0].equals("listTeams")) {(new CmdListTeams()).execute(cmdParts);} 
                else if (cmdParts[0].equals("listProjects")) {(new CmdListProject()).execute(cmdParts);}
-
-
-
+            }
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         } finally {
