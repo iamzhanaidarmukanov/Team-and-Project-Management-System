@@ -72,6 +72,23 @@ public class Day implements Cloneable, Comparable<Day> {
         return false;
     }
 
+    public static boolean isValid(String string) {
+        String[] dateParts = string.split("-");
+        if (dateParts.length != 3) {
+            return false;
+        }
+        if (!monthNames.contains(dateParts[1])) {
+            return false;
+        }
+        int d = Integer.parseInt(dateParts[0]), m = monthNames.indexOf(dateParts[1]) / 3 + 1,
+                y = Integer.parseInt(dateParts[2]);
+        if (!valid(y, m, d)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     // Return a string for the day like dd MMM yyyy
     public String toString() {
         return day + "-" + monthNames.substring((month - 1) * 3, (month) * 3) + "-" + year;
@@ -124,7 +141,7 @@ public class Day implements Cloneable, Comparable<Day> {
         }
     }
 
-    // Moving from today to given number of days forward
+    // Moving from today to given number of days
     public Day plusNumOfDays(Integer numOfDays){
         Day d = new Day(year, month, day);
         for (int i = 0; i < numOfDays; i++) {

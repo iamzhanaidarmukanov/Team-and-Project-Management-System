@@ -12,6 +12,7 @@ import main.commands.CmdListProject;
 import main.commands.CmdListTeams;
 import main.commands.CmdSetupTeam;
 import main.commands.CmdStartNewDay;
+import main.commands.CmdTakeProject;
 
 public class Main {
 
