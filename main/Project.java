@@ -9,6 +9,7 @@ public class Project implements Comparable<Project> {
     private Team assignedTeam;
     private Day startDate;
     private Day endDate;
+    private ArrayList<Employee> workerRecordHistory = new ArrayList<>();;
 
     public Project(String pN, Integer mp) {
         this.projectName = pN;
@@ -122,7 +123,41 @@ public class Project implements Comparable<Project> {
 
     // Is Assigned?
     public boolean isTeamAssigned() {
-		return false;
+		if (assignedTeam != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void listWorkerDetails() {
+        ArrayList<String> workerRecords = new ArrayList<>();
+        System.out.println("Est manpower : " + this.manpower + " man-days");
+        System.out.println("Team         : " + this.assignedTeam.getName() + " (Leader is " + this.assignedTeam.getHeadName() + ")");
+        System.out.println("Work period  : " + this.startDate.toString() + " to " + this.endDate.toString());
+        System.out.println("\nMembers: ");
+        for(int i=0; i<workerRecordHistory.size(); i++){
+            if(workerRecordHistory.get(i).getProjectEndDay(this, this.assignedTeam).compareTo(this.startDate) != -1){
+                workerRecords.add("  " + workerRecordHistory.get(i).getName() 
+                                + " (" + workerRecordHistory.get(i).projectStartDate(this, assignedTeam) 
+                                + " to " + workerRecordHistory.get(i).projectEndDate(this, assignedTeam) + ")");
+            }
+        }
+        Collections.sort(workerRecords);
+        for(String s: workerRecords){
+            System.out.println(s);
+        }
+    }
+
+    public void addAssignedTeamMembersHistory(Employee e){
+        workerRecordHistory.add(e);
+    }
+
+    public Day getProjectTakenDate(){
+        return startDate;
+    }
+
+    public Day getProjectFinishedDate(){
+        return endDate;
     }
 
 

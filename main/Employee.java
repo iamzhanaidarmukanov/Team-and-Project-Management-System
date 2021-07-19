@@ -47,6 +47,9 @@ public class Employee implements Comparable<Employee>{
         Day d = new Day(SystemDate.getInstance().toString());
         this.teamJoinDates.add(d);
         this.joinedTeams.add(t);
+        if (t.getProject() != null) {
+            t.getProject().addAssignedTeamMembersHistory(this);
+        }
     }
     public void joinToTeam(Employee e, Team t) {
         this.aTeam = t;
@@ -85,4 +88,52 @@ public class Employee implements Comparable<Employee>{
         }
     }
     
+    public String projectStartDate(Project p, Team t){
+        for(int i=0; i<joinedTeams.size(); i++){
+            if(joinedTeams.get(i).getName().equals(t.getName())){
+                if(teamJoinDates.get(2*i).compareTo(p.getProjectTakenDate()) == -1){// if employee joined team earlier than project taken date
+                    return p.getProjectTakenDate().toString();
+                }
+                else{
+                    return teamJoinDates.get(2*i).toString();
+                }
+            }
+        }
+        return "";
+    }
+
+    public String projectEndDate(Project p, Team t){
+        for(int i=0; i<joinedTeams.size(); i++){
+            if(joinedTeams.get(i).getName().equals(t.getName())){
+                if(teamJoinDates.size()==2*i+1){
+                    return p.getProjectFinishedDate().toString();
+                }
+                else if(teamJoinDates.size()>2*i+1 && p.getProjectFinishedDate().compareTo(teamJoinDates.get(2*i+1)) == -1){
+                    return p.getProjectFinishedDate().toString();
+                }
+                else{
+                    return teamJoinDates.get(2*i+1).toString();
+                }
+            }
+        }
+        return "";
+    }
+
+    public Day getProjectEndDay(Project p, Team t){
+        for(int i=0; i<joinedTeams.size(); i++){
+            if(joinedTeams.get(i).getName().equals(t.getName())){
+                if(teamJoinDates.size()==2*i+1){
+                    return p.getProjectFinishedDate();
+                }
+                else if(teamJoinDates.size()>2*i+1 && p.getProjectFinishedDate().compareTo(teamJoinDates.get(2*i+1)) == -1){
+                    return p.getProjectFinishedDate();
+                }
+                else{
+                    return teamJoinDates.get(2*i+1);
+                }
+            }
+        }
+        return null;
+    }
+
 }

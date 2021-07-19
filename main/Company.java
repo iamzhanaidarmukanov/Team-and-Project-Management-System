@@ -201,4 +201,9 @@ public class Company {
         Employee e = getEmployee(name);
         e.listJoinedTeams();
     }
+
+    public void listProjectWorkerDetails(String projectName) {
+        Project p = getProject(projectName);
+        p.listWorkerDetails();
+    }
 }
