@@ -6,6 +6,8 @@ public class Employee implements Comparable<Employee>{
 
     private String name;
     private Team aTeam;
+    private ArrayList<Team> joinedTeams = new ArrayList<>();
+    private ArrayList<Day> teamJoinDates = new ArrayList<>();
 
     // Constructor
     public Employee(String n) {
@@ -42,11 +44,18 @@ public class Employee implements Comparable<Employee>{
 
     public void joinToTeam(Team t) {
         this.aTeam = t;
-        // t.addMember(this);
+        Day d = new Day(SystemDate.getInstance().toString());
+        this.teamJoinDates.add(d);
+        this.joinedTeams.add(t);
     }
     public void joinToTeam(Employee e, Team t) {
         this.aTeam = t;
         t.addMember(e);
+    }
+
+    public void addLastDay(){
+        Day d = new Day(SystemDate.getInstance().previous().toString());
+        this.teamJoinDates.add(d);
     }
 
     public Team getCurrentTeam() {
@@ -56,5 +65,24 @@ public class Employee implements Comparable<Employee>{
     public void quitTeam() {
         this.aTeam = null;
 	}
+
+    public void listJoinedTeams() {
+        System.out.println("The teams that " + this.name + " has joined: ");
+        for(int i=0; i<joinedTeams.size(); i++){
+            if(joinedTeams.get(i).getName().equals(aTeam.getName())){
+                if(joinedTeams.get(i).getHeadName().equals(this.name)){
+                    System.out.println(joinedTeams.get(i).getName() + " (" + teamJoinDates.get(teamJoinDates.size()-1)+ " to --), as a leader");
+                }
+                else{
+                    System.out.println(joinedTeams.get(i).getName() + " (" + teamJoinDates.get(teamJoinDates.size()-1)+ " to --)");
+
+                }
+
+            }
+            else{
+                System.out.println(joinedTeams.get(i).getName() + " (" + teamJoinDates.get(2*i)+ " to " + teamJoinDates.get(2*i+1) +")");
+            }
+        }
+    }
     
 }

@@ -152,6 +152,7 @@ public class Company {
         if(e.getCurrentTeam()!=null){
             e.getCurrentTeam().deleteMember(e);
             e.quitTeam();
+            e.addLastDay();
         }
     
         e.joinToTeam(t);
@@ -194,5 +195,10 @@ public class Company {
                                     + allTeams.get(i).getStartDay(manpower).toString() + " to " 
                                     + allTeams.get(i).getFinishDay(manpower).toString() + ")");
         }
+    }
+
+    public void listEmployeeDetails(String name) {
+        Employee e = getEmployee(name);
+        e.listJoinedTeams();
     }
 }

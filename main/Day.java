@@ -102,6 +102,15 @@ public class Day implements Cloneable, Comparable<Day> {
             return true;
     }
 
+    private boolean isStartOfAMonth() {
+        if (valid(year,month,day-1)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     // Go to next day
     public Day next() {
         if (isEndOfAMonth())
@@ -113,6 +122,25 @@ public class Day implements Cloneable, Comparable<Day> {
         else
             return new Day(year, month, day + 1); // your task: next day of current month
     }
+
+    public Day previous() 
+	{
+		if (isStartOfAMonth())
+			if (month==1)
+				return new Day(year-1,12,31); 
+			else if(month==2 ||month==4 || month==6 || month==8 || month==9 || month==11)
+				return  new Day(year,month-1,31); 
+			else if(month==5 || month==7 || month==10 || month==12)
+				return  new Day(year,month-1,30);	
+			else
+				if (isLeapYear(year))
+					return  new Day(year,month-1,29); 
+				else
+					return new Day(year,month-1,28);
+		else
+			return new Day(year,month,day-1);	
+    }
+
 
     // Comparing two days
     @Override
