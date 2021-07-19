@@ -12,6 +12,7 @@ import main.commands.CmdListProject;
 import main.commands.CmdListTeams;
 import main.commands.CmdSetupTeam;
 import main.commands.CmdStartNewDay;
+import main.commands.CmdSuggestTeam;
 import main.commands.CmdTakeProject;
 
 public class Main {
@@ -59,6 +60,9 @@ public class Main {
                else if(cmdParts[0].equals("joinTeam")) {(new CmdJoinTeam()).execute(cmdParts);}
                else if(cmdParts[0].equals("changeTeam")) {(new CmdChangeTeam()).execute(cmdParts);}
                else if(cmdParts[0].equals("takeProject")) {(new CmdTakeProject()).execute(cmdParts);}
+               else if(cmdParts[0].equals("suggestTeam")) {(new CmdSuggestTeam()).execute(cmdParts);}
+            //    else if(cmdParts[0].equals("showEmployeeDetails")) {(new CmdTakeProject()).execute(cmdParts);}
+            //    else if(cmdParts[0].equals("showProjectWorkerDetails")) {(new CmdTakeProject()).execute(cmdParts);}
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");

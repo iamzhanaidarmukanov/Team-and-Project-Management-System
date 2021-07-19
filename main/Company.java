@@ -164,11 +164,35 @@ public class Company {
     }
 
     public void teamTakeProject(Team t, Project p, Day startDay, Day endDay) {
-        
+        t.assignProject(p);
+        p.assignTeam(t);
+        t.bookDaysWorkingOnProject(startDay, endDay);
+        p.setStartDate(startDay);
+        p.setEndDate(endDay);
 	}
 	public void teamDropProject(Team t, Project p, Day startDay, Day endDay) {
-        
+        t.dropPoject(p);
+        p.unassignTeam();
+        t.unbookDaysWorkingOnProject(startDay, endDay);
+        p.resetStartDate();
+        p.resetEndDate();        
     }
-    
 
+    public void suggestTeam(Project p, Integer manpower) {
+        ArrayList<Day> finishDays = new ArrayList<>();
+        for (int i = 0; i < allTeams.size(); i++) {
+            finishDays.add(allTeams.get(i).getFinishDay(manpower));
+        }
+        Day earliestFinishDay = new Day(finishDays.get(0).toString());
+        for(int i = 0; i < finishDays.size(); ++i) {
+            if (finishDays.get(i).compareTo(earliestFinishDay) == -1)
+                earliestFinishDay = finishDays.get(i);
+        }
+        for (int i = 0; i < finishDays.size(); ++i) {
+            if (earliestFinishDay.toString().equals(finishDays.get(i).toString()))
+                System.out.println(allTeams.get(i).getName() + " (Work period:  " 
+                                    + allTeams.get(i).getStartDay(manpower).toString() + " to " 
+                                    + allTeams.get(i).getFinishDay(manpower).toString() + ")");
+        }
+    }
 }

@@ -9,6 +9,7 @@ public class Team implements Comparable<Team> {
     private Day dateSetup; // the date this team was setup
     private Project currentProject;
     private ArrayList<Employee> members = new ArrayList<>();
+    private ArrayList<Day> daysWorkingOnProject = new ArrayList<>();
 
     // Constructor
     public Team(String n, Employee hd) {
@@ -74,6 +75,7 @@ public class Team implements Comparable<Team> {
             Collections.sort(this.members);
             String membersString = "";
             if (this.members.size() == 0) {
+                this.members.add(head);
                 return "(no member)";
             }
             for (int i = 0; i < this.members.size() - 1; i++) {
@@ -99,6 +101,117 @@ public class Team implements Comparable<Team> {
     }
     public void dropPoject(Project p) {
         this.currentProject = null;
+    }
+
+    public void bookDaysWorkingOnProject(Day startDay, Day endDay) {
+        Day dtmp = new Day(startDay.toString());
+        while(!dtmp.toString().equals(endDay.next().toString())) {
+            daysWorkingOnProject.add((new Day(dtmp.toString())));
+            dtmp = dtmp.next();   
+        }
+    }
+
+    public void unbookDaysWorkingOnProject(Day startDay, Day endDay) {
+        Day dtmp = new Day(startDay.toString());
+        while(!dtmp.toString().equals(endDay.next().toString())) {
+            Day d = new Day(dtmp.toString());
+            daysWorkingOnProject.remove(d);
+            for(int i=0; i<daysWorkingOnProject.size(); i++) {
+                if(daysWorkingOnProject.get(i).toString().equals(d.toString())) {
+                    daysWorkingOnProject.remove(daysWorkingOnProject.get(i));
+                    break;
+                }
+            }
+            dtmp.set(dtmp.next().toString());   
+        }
+    }
+
+    public boolean busyPeriod(Day startDay, Day endDay) {
+        Day d = new Day(startDay.toString());
+        while(!d.toString().equals(endDay.next().toString())){
+            for(int i=0; i<daysWorkingOnProject.size(); i++){
+                if(daysWorkingOnProject.get(i).toString().equals(d.toString())){
+                    return true;
+                }
+            }
+            d.set(d.next().toString());
+        }
+        return false;
+    }
+
+    public boolean dayIsBusy(Day d){
+        for(int i=0; i<daysWorkingOnProject.size(); i++){
+            if(daysWorkingOnProject.get(i).toString().equals(d.toString())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Day getStartDay(Integer manpower) {
+        Double workDays = (double) manpower / (double) this.members.size();
+        Day startDay = new Day(SystemDate.getInstance().next().toString());
+        Day temp;
+        boolean availableDay = false;
+        while (availableDay == false) {
+            if (dayIsBusy(startDay)) {
+                startDay = startDay.next();
+            } else {
+                temp = startDay;
+                boolean isBusy = false;
+                for (int i = 0; i < workDays - 1; ++i) {
+                    if (dayIsBusy(temp)) {
+                        startDay = startDay.next();
+                        isBusy = true;
+                        break;
+                    } else {
+                        temp = temp.next();
+                    }
+                }
+                if (dayIsBusy(temp)) {
+                    startDay = startDay.next();
+                    isBusy = true;
+                }
+                if (isBusy == false) {
+                    availableDay = true;
+                }
+            }
+        }
+        return startDay;
+    }
+
+    public Day getFinishDay(Integer manpower) {
+        Double workDays = (double) manpower / (double) this.members.size();
+        Day startDay = new Day(SystemDate.getInstance().next().toString());
+        Day finishDay = null;
+        Day temp;
+        boolean availableDay = false;
+        while (availableDay == false) {
+            if (dayIsBusy(startDay)) {
+                startDay = startDay.next();
+            } else {
+                temp = startDay;
+                boolean isBusy = false;
+                for (int i = 0; i < workDays - 1; ++i) {
+                    if (dayIsBusy(temp)) {
+                        startDay = startDay.next();
+                        isBusy = true;
+                        break;
+                    } else {
+                        temp = temp.next();
+                    }
+                }
+                if (dayIsBusy(temp)) {
+                    startDay = startDay.next();
+                    isBusy = true;
+                }
+                if (isBusy == false) {
+                    finishDay = new Day(temp.toString());
+                    availableDay = true;
+                }
+            }
+        }
+        return finishDay;
     }
 
 }

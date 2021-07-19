@@ -12,6 +12,7 @@ import main.exceptions.ExInsufficientCommandArguments;
 import main.exceptions.ExInvalidDate;
 import main.exceptions.ExNoSuchProject;
 import main.exceptions.ExNoSuchTeam;
+import main.exceptions.ExTeamNotAvailable;
 
 public class CmdTakeProject extends RecordedCommand {
 
@@ -28,6 +29,7 @@ public class CmdTakeProject extends RecordedCommand {
                 throw new ExInsufficientCommandArguments();
             }
             Company company = Company.getInstance();
+            
             if(company.teamAdded(cmdParts[1])==false) {
                 throw new ExNoSuchTeam();
             }
@@ -42,15 +44,17 @@ public class CmdTakeProject extends RecordedCommand {
             }
             t = company.getTeam(cmdParts[1]);
             p = company.getProject(cmdParts[2]);
+
             if(p.isTeamAssigned()==true){
                 throw new ExAreadyAssignedTeamProject();
             }
             startDay = new Day(cmdParts[3]);
 
-            int daysToWork = p.getManpower() / t.getMembers().size();
-            endDay = startDay.plusNumOfDays(daysToWork);
+            Double daysToWork = (double) p.getManpower() / (double) t.getMembers().size();
+            endDay = startDay.plusNumOfDays((int) Math.ceil(daysToWork) - 1);
 
-            // Exception that team is busy
+            if (t.busyPeriod(startDay, endDay))
+                throw new ExTeamNotAvailable();
 
             company.teamTakeProject(t,p, startDay, endDay);
 
@@ -71,6 +75,8 @@ public class CmdTakeProject extends RecordedCommand {
         } catch (ExAreadyAssignedTeamProject e){
             System.out.println(e.getMessage());
         } catch (ExInvalidDate e){
+            System.out.println(e.getMessage());
+        } catch (ExTeamNotAvailable e){
             System.out.println(e.getMessage());
         }
 	}
